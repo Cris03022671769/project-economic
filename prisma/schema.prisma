@@ -1,0 +1,71 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum ClienteTipo {
+  HOTEL
+  SALUD
+  CASA
+}
+
+model Cliente {
+  id              BigInt            @id @default(autoincrement())
+  nombre          String            @db.VarChar(100)
+  tipo            ClienteTipo
+  direccion       String            @db.VarChar(255)
+  tarifa_por_m3   Decimal           @db.Decimal(10, 2)
+  createdAt       DateTime          @default(now()) @map("created_at")
+
+  serviciosRecogida ServicioRecogida[]
+
+  @@map("clientes") // Mapea el nombre del modelo al nombre de la tabla en la DB
+}
+
+model Trabajador {
+  id              BigInt            @id @default(autoincrement())
+  nombre          String            @db.VarChar(100)
+  rol             String            @db.VarChar(50)
+  salario_base    Decimal           @db.Decimal(10, 2)
+  createdAt       DateTime          @default(now()) @map("created_at")
+
+  serviciosRecogida ServicioRecogida[]
+
+  @@map("trabajadores") // Mapea el nombre del modelo al nombre de la tabla en la DB
+}
+
+model Vehiculo {
+  id                      BigInt            @id @default(autoincrement())
+  matricula               String            @unique @db.VarChar(20)
+  capacidad_max_m3        Decimal           @db.Decimal(10, 2)
+  consumo_combustible_litros Decimal        @db.Decimal(10, 2)
+  createdAt               DateTime          @default(now()) @map("created_at")
+
+  serviciosRecogida ServicioRecogida[]
+
+  @@map("vehiculos") // Mapea el nombre del modelo al nombre de la tabla en la DB
+}
+
+model ServicioRecogida {
+  id                      BigInt            @id @default(autoincrement())
+  clienteId               BigInt            @map("cliente_id")
+  vehiculoId              BigInt            @map("vehiculo_id")
+  trabajadorId            BigInt            @map("trabajador_id")
+  fecha                   DateTime          @db.Date // Mapea a DATE en la DB
+  volumen_recogido_m3     Decimal           @db.Decimal(10, 2)
+  costo_servicio          Decimal           @db.Decimal(10, 2)
+
+  cliente                 Cliente           @relation(fields: [clienteId], references: [id])
+  vehiculo                Vehiculo          @relation(fields: [vehiculoId], references: [id])
+  trabajador              Trabajador        @relation(fields: [trabajadorId], references: [id])
+
+  @@index([fecha])
+  @@index([clienteId])
+  @@index([vehiculoId])
+  @@map("servicios_recogida") // Mapea el nombre del modelo al nombre de la tabla en la DB
+}
