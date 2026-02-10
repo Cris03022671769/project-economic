@@ -6,8 +6,8 @@ import {
   obtenerVehiculoPorId,
   actualizarVehiculo,
   eliminarVehiculo,
-} from '../../src/services/vehiculoService';
-import { serializeBigInt } from '../../src/lib/utils';
+} from '@/services/vehiculoService';
+import { serializeBigInt } from '@/lib/utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {

@@ -6,9 +6,9 @@ import {
   obtenerClientePorId,
   actualizarCliente,
   eliminarCliente,
-} from '../../src/services/clienteService';
+} from '@/services/clienteService';
 import { ClienteTipo } from '@prisma/client';
-import { serializeBigInt } from '../../src/lib/utils';
+import { serializeBigInt } from '@/lib/utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {

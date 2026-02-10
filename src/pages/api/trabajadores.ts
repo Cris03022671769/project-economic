@@ -6,8 +6,8 @@ import {
   obtenerTrabajadorPorId,
   actualizarTrabajador,
   eliminarTrabajador,
-} from '../../src/services/trabajadorService';
-import { serializeBigInt } from '../../src/lib/utils';
+} from '@/services/trabajadorService';
+import { serializeBigInt } from '@/lib/utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {

@@ -6,8 +6,8 @@ import {
   obtenerServicioRecogidaPorId,
   actualizarServicioRecogida,
   eliminarServicioRecogida,
-} from '../../src/services/servicioRecogidaService';
-import { serializeBigInt } from '../../src/lib/utils';
+} from '@/services/servicioRecogidaService';
+import { serializeBigInt } from '@/lib/utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
